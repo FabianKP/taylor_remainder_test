@@ -1,6 +1,8 @@
 # Taylor remainder test
 
-This is a Python module that implements the Taylor remainder test.
+This is a Python module that implements the Taylor remainder test. Based on 
+[Taylor's remainder theorem](https://en.wikipedia.org/wiki/Taylor%27s_theorem#Taylor's_theorem_for_multivariate_functions), it
+allows to check the accuracy of custom gradients and Jacobians.
 
 ## Usage example
 
