@@ -51,3 +51,36 @@ def test_taylor_remainder_jacobian():
     assert taylor_remainder_test_jacobian(fun=fun, jac=jac, x=x)
 
 
+def test_taylor_remainder_large_fun():
+    s = 10
+    dim = 1000
+    def inner_fun(x):
+        return x * np.power((1 - np.square(x)), s)
+
+    def inner_jac(x):
+        return np.power((1 - np.square(x)), s) - 2 * s * np.square(x) * np.power((1 - np.square(x)), s - 1)
+    def fun(x):
+        return np.sum(np.square(inner_fun(x)))
+
+    def grad(x):
+        j = inner_jac(x)
+        g = j * fun(x)
+        return g
+
+    def wrong_grad(x):
+        j = inner_jac(x)
+        g = j * fun(x) + np.ones_like(x)
+        return g
+
+    x = np.zeros(dim)
+    grad_passed = taylor_remainder_test(fun=fun, grad=grad, x=x)
+    wrong_grad_passed = taylor_remainder_test(fun=fun, grad=wrong_grad, x=x)
+    assert grad_passed and not wrong_grad_passed
+
+
+
+
+
+
+
+
